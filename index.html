@@ -2,36 +2,49 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>BBC Arabic Live</title>
+    <title>BBC Arabic Live - MPEG-DASH</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.compiled.js"></script>
     <style>
-      /* خلي body و html ياخدوا كل مساحة الشاشة */
-      html, body {
+      html,
+      body {
         margin: 0;
         padding: 0;
         height: 100%;
-        background-color: black; /* خلفية سوداء للمشغل */
+        background-color: black;
       }
 
-      /* خلى الفيديو ياخد كامل العرض والارتفاع */
       #video {
         width: 100vw;
         height: 100vh;
-        object-fit: contain; /* يحافظ على نسبة العرض للارتفاع */
+        object-fit: contain;
         background-color: black;
         display: block;
+      }
+
+      #watermark {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        opacity: 0.5;
+        font-size: 18px;
+        color: white;
+        pointer-events: none;
+        user-select: none;
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+        text-shadow: 0 0 5px black;
       }
     </style>
   </head>
   <body>
     <video id="video" controls autoplay></video>
+    <div id="watermark">© حقوقي</div>
 
     <script>
       async function initPlayer() {
         const video = document.getElementById("video");
         const player = new shaka.Player(video);
 
-        // رابط البث بصيغة .mpd
         const manifestUri =
           "https://vs-cmaf-pushb-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_arabic_tv/mobile_wifi_main_hd_abr_v2.mpd";
 
